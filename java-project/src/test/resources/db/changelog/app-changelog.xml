@@ -17,7 +17,7 @@
                 <constraints nullable="false" />
             </column>
         </createTable>
-                <createTable tableName="STOCKC">
+        <createTable tableName="STOCKC">
             <column name="id_stock" type="int" autoIncrement="false" />
             <column name="nameC" type="varchar(50)">
                 <constraints nullable="false" />
@@ -29,10 +29,31 @@
                 <constraints nullable="false" />
             </column>
         </createTable>
-                <createTable tableName="PROCESSB">
+        <createTable tableName="PROCESSB">
             <column name="id_process" type="int" autoIncrement="false" />
             <column name="nameB" type="varchar(50)">
                 <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="PROCESSC">
+            <column name="id_process" type="int" autoIncrement="false" />
+            <column name="nameC" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="TA_PRM_PROCESS">
+            <column name="id_process" type="int" autoIncrement="false" />
+            <column name="id_stock" type="int" autoIncrement="false" />
+            <column name="flg_keep_process" type="varchar(50)" />
+            <column name="dat_created" type="date" />
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <createTable tableName="TA_PRM_STOCK">
+            <column name="id_stock" type="int" autoIncrement="false" />
+            <column name="name" type="varchar(50)">
+                <constraints nullable="true" />
             </column>
         </createTable>
     </changeSet>
@@ -46,7 +67,28 @@
     </changeSet>
 
     <changeSet author="xxx" id="C::dataForTable">
+        <loadData file="/db/changelog/stockc.csv" tableName="STOCKC" />
+    </changeSet>
+
+    <changeSet author="xxx" id="D::dataForTable">
         <loadData file="/db/changelog/processa.csv" tableName="PROCESSA" />
+    </changeSet>
+
+    <changeSet author="xxx" id="E::dataForTable">
+        <loadData file="/db/changelog/processb.csv" tableName="PROCESSB" />
+    </changeSet>
+
+
+    <changeSet author="xxx" id="G::dataForTable">
+        <loadData file="/db/changelog/processc.csv" tableName="PROCESSC" />
+    </changeSet>
+
+    <changeSet author="xxx" id="F::dataForTable">
+        <loadData file="/db/changelog/ta_prm_process.csv" tableName="TA_PRM_PROCESS" />
+    </changeSet>
+
+    <changeSet author="xxx" id="H::dataForTable">
+        <loadData file="/db/changelog/ta_prm_stock.csv" tableName="TA_PRM_STOCK" />
     </changeSet>
 
 </databaseChangeLog>
