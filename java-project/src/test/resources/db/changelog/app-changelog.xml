@@ -5,6 +5,12 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="1" author="nvoxland">
+        <createTable tableName="CUSTOMA">
+            <column name="id_stock" type="int" autoIncrement="false" />
+            <column name="nameA" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
         <createTable tableName="STOCKA">
             <column name="id_stock" type="int" autoIncrement="false" />
             <column name="nameA" type="varchar(50)">
@@ -56,6 +62,10 @@
                 <constraints nullable="true" />
             </column>
         </createTable>
+    </changeSet>
+
+    <changeSet author="xxx" id="I::dataForTable">
+        <loadData file="/db/changelog/customa.csv" tableName="CUSTOMA"/>
     </changeSet>
 
     <changeSet author="xxx" id="A::dataForTable">

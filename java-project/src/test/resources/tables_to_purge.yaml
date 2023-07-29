@@ -1,3 +1,14 @@
-STOCKA: id_stock
-STOCKB: id_stock
-PROCESSA: id_process
+- table: 1
+  name: STOCKA
+  type: id_stock
+- table: 2
+  name: STOCKB
+  type: id_stock
+- table: 3
+  name: PROCESSA
+  type: id_process
+- table: 4
+  name: CUSTOMA
+  type: custom
+  selectsql: "select id_stock from CUSTOMA"
+  deletesql: "delete CUSTOMA where id_stock=%d"
