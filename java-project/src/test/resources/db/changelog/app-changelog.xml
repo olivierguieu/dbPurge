@@ -47,6 +47,12 @@
                 <constraints nullable="false" />
             </column>
         </createTable>
+        <createTable tableName="PROCESSD">
+            <column name="id_process" type="int" autoIncrement="false" />
+            <column name="nameC" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
         <createTable tableName="TA_PRM_PROCESS">
             <column name="id_process" type="int" autoIncrement="false" />
             <column name="id_stock" type="int" autoIncrement="false" />
@@ -65,7 +71,7 @@
     </changeSet>
 
     <changeSet author="xxx" id="I::dataForTable">
-        <loadData file="/db/changelog/customa.csv" tableName="CUSTOMA"/>
+        <loadData file="/db/changelog/customa.csv" tableName="CUSTOMA" />
     </changeSet>
 
     <changeSet author="xxx" id="A::dataForTable">
@@ -92,6 +98,11 @@
     <changeSet author="xxx" id="G::dataForTable">
         <loadData file="/db/changelog/processc.csv" tableName="PROCESSC" />
     </changeSet>
+
+    <changeSet author="xxx" id="J::dataForTable">
+        <loadData file="/db/changelog/processd.csv" tableName="PROCESSD" />
+    </changeSet>
+
 
     <changeSet author="xxx" id="F::dataForTable">
         <loadData file="/db/changelog/ta_prm_process.csv" tableName="TA_PRM_PROCESS" />
