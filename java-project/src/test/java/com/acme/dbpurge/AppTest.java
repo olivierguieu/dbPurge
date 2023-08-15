@@ -102,7 +102,7 @@ public class AppTest {
 
         Set<Integer> setIdToDelete = Sets.newHashSet(1, 2);
         Set<Integer> setIdToCheckPostDelete = Sets.newHashSet(3, 4, 5, 6);
-        tableToPurge.deleteRowsFromTable(setIdToDelete);
+        tableToPurge.deleteRowsFromTable(setIdToDelete,2);
         Set<Integer> setIdPostDelete = tableToPurge.getListOfIdInTable();
         assertTrue(CollectionUtils.isEqualCollection(setIdToCheckPostDelete, setIdPostDelete));
 
@@ -124,7 +124,7 @@ public class AppTest {
 
         Set<Integer> listIdToDelete = Sets.newHashSet(1, 2, 5);
         Set<Integer> listIdToCheckPostDelete = Sets.newHashSet(3, 4, 6, 7);
-        tableToPurge.deleteRowsFromTable(listIdToDelete);
+        tableToPurge.deleteRowsFromTable(listIdToDelete,2);
         Set<Integer> listIdPostDelete = tableToPurge.getListOfIdInTable();
         assertTrue(CollectionUtils.isEqualCollection(listIdToCheckPostDelete, listIdPostDelete));
 
@@ -146,7 +146,7 @@ public class AppTest {
 
         Set<Integer> setIdToDelete = Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 19);
         Set<Integer> setIdToCheckPostDelete = Sets.newHashSet(12, 13, 14, 15, 16, 17, 18);
-        tableToPurge.deleteRowsFromTable(setIdToDelete);
+        tableToPurge.deleteRowsFromTable(setIdToDelete,2);
         Set<Integer> setIdPostDelete = tableToPurge.getListOfIdInTable();
 
         LOGGER.info(setIdPostDelete.toString());

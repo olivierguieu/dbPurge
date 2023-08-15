@@ -18,6 +18,7 @@ public class DatabasePurgerProperties {
     private String dbUser = "";
     private String dbPassword = "";
     private Integer dbMaxIdToPurgeByTable = -1;
+    private Integer dbMaxRowsToPurgeByDelete = 1000;
 
     private DatabasePurgerProperties() {
     }
@@ -42,6 +43,17 @@ public class DatabasePurgerProperties {
                     ex.printStackTrace();
                 }
             }
+
+            String maxRowsToPurgeByDelete = prop.getProperty("db.max_rows_to_purge_by_delete");
+
+            if (maxRowsToPurgeByDelete != null && maxRowsToPurgeByDelete.isEmpty() == false) {
+                try {
+                    dbMaxRowsToPurgeByDelete = Integer.parseInt(maxRowsToPurgeByDelete);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -63,5 +75,6 @@ public class DatabasePurgerProperties {
         System.out.println("dbPassword=" + dbPassword);
 
         System.out.println("db.max_id_to_purge_by_table=" + dbMaxIdToPurgeByTable);
+        System.out.println("db.max_rows_to_purge_by_delete=" + dbMaxRowsToPurgeByDelete);
     }
 }

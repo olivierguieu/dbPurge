@@ -78,28 +78,40 @@ public class Utils {
     }
 
     public static void deleteRowsFromTable(String tableName, ColumnEnum columnName, Set<Integer> listIdToPurge,
-            PurgerLogger purgerLogger) {
+            PurgerLogger purgerLogger,int maxRowsToPurgeInEachDelete) {
         listIdToPurge.parallelStream().forEach(id -> {
             LOGGER.info("Task with integer " + id + " is executed by thread " + Thread.currentThread().getName());
-            deleteRowsFromTableForOneId(tableName, columnName.getColumnName(), id, purgerLogger);
+            deleteRowsFromTableForOneId(tableName, columnName.getColumnName(), id, purgerLogger,maxRowsToPurgeInEachDelete);
         });
     }
 
+    /* 
     public static void deleteRowsFromTableForOneId(String tableName, String columnName, Integer Id,
             PurgerLogger purgerLogger) {
         String sql = String.format("DELETE FROM %s WHERE %s = %d ", tableName, columnName, Id);
         deleteRowsUsingDeleteQueryForOneId(sql, Id, purgerLogger);
     }
+    */
 
-    public static void deleteRowsUsingDeleteQueryForOneId(String deleteQuery, Integer Id, PurgerLogger purgerLogger) {
+    public static void deleteRowsFromTableForOneId(String tableName, String columnName, Integer Id,
+            PurgerLogger purgerLogger, int maxRowsToPurgeInEachDelete) {
+        String sql = String.format("DELETE TOP(%d) FROM %s WHERE %s = %d ", maxRowsToPurgeInEachDelete, tableName, columnName, Id);
+        while ( deleteRowsUsingDeleteQueryForOneId(sql, Id, purgerLogger) > 0 ) {
+             LOGGER.info("Batch deleteRowsUsingDeleteQueryForOneId for size(" + maxRowsToPurgeInEachDelete +")" );
+        }
+    }
+
+    public static int deleteRowsUsingDeleteQueryForOneId(String deleteQuery, Integer Id, PurgerLogger purgerLogger) {
+        int count = -1;
         try (Connection conn = HikariCPDataSource.getConnection(); Statement stmt = conn.createStatement();) {
             String sql = String.format(deleteQuery, Id);
-            int count = stmt.executeUpdate(sql);
+            count = stmt.executeUpdate(sql);
             LOGGER.info(String.format("%d row(s) deleted from deleteQuery[%s]", count, deleteQuery));
             purgerLogger.addToLog(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return count;
     }
 
     public static void deleteRowsUsingDeleteQuery(String deleteQuery, Set<Integer> listIdToPurge,

@@ -32,11 +32,11 @@ public class TableToPurge {
         return tableName + ":" + columnEnum.name();
     }
 
-    public void deleteRowsFromTable(Set<Integer> listIdToPurge) {
+    public void deleteRowsFromTable(Set<Integer> listIdToPurge, Integer max_rows_to_purge_by_delete) {
         if (columnEnum == ColumnEnum.CUSTOM) {
             Utils.deleteRowsUsingDeleteQuery(deleteQuery,listIdToPurge, purgerLogger);
         } else {
-            Utils.deleteRowsFromTable(tableName, columnEnum, listIdToPurge, purgerLogger);
+            Utils.deleteRowsFromTable(tableName, columnEnum, listIdToPurge, purgerLogger, max_rows_to_purge_by_delete);
         }
     }
 
@@ -70,11 +70,12 @@ public class TableToPurge {
             LOGGER.info("No limit on deleting rows from tables");
         }
 
+        int max_rows_to_purge_by_delete =  DatabasePurgerProperties.getInstance(null).getDbMaxRowsToPurgeByDelete();
+
         if (setIdsInTable.size() > 0) {
             LOGGER.info(String.format("Deleting %d Ids from table '%s'...", setIdsInTable.size(), tableName));
-            deleteRowsFromTable(setIdsInTable);
+            deleteRowsFromTable(setIdsInTable,max_rows_to_purge_by_delete);
             LOGGER.info(String.format("Deleted %d Ids from table '%s'.", setIdsInTable.size(), tableName));
         }
     }
-
 }
